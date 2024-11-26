@@ -8,6 +8,6 @@ spec:
   templates:
   - name: hello-world
     container:
-      image: alpine:latest
+      image: nginx:latest
       command: [sh, -c]
       args: ["echo Hello, World!"]
