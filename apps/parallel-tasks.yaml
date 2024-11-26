@@ -15,4 +15,4 @@ spec:
   - name: run-task
     container:
       image: nginx:latest
-      command: ["echo", "-c", "your-task-command"]
+      command: ["echo", "-c", "Hello"]
