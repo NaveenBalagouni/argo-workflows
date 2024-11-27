@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: nginx-deploy-sensor
+  namespace: argo-events
+spec:
+  template:
+    serviceAccountName: argo-events-sa
+  dependencies:
+    - name: webhook-gateway
+      eventSourceName: webhook
+      eventName: push
+  triggers:
+    - template:
+        name: nginx-deploy-trigger
+        k8s:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: nginx-deploy-
+                namespace: argo
+              spec:
+                workflowTemplateRef:
+                  name: nginx-deploy

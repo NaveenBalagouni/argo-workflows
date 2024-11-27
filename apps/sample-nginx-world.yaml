@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: nginx-world
+  namespace: argo
+  uid: 80e9cbe9-e2f5-4af5-807c-638e4d6338c7
+  resourceVersion: "8917641"
+  generation: 1
+  creationTimestamp: "2024-11-26T11:31:26Z"
+  labels:
+    workflows.argoproj.io/creator: ChluYXZlZW4uYmFsYWdvdW5pQG9wc214LmlvEgRva3Rh
+  managedFields:
+    - manager: argo
+      operation: Update
+      apiVersion: argoproj.io/v1alpha1
+      time: "2024-11-26T11:31:26Z"
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            ".": {}
+            f:workflows.argoproj.io/creator: {}
+        f:spec: {}
+        f:status: {}
+spec:
+  entrypoint: sample-nginx-world
+  activeDeadlineSeconds: 300  # 5 minutes
+  ttlStrategy:
+    secondsAfterCompletion: 3600  # 1 hour
+  podGC:
+    strategy: OnWorkflowSuccess
+  arguments: {}
+  templates:
+    - name: sample-nginx-world
+      inputs: {}
+      outputs: {}
+      metadata: {}
+      container:
+        name: ""
+        image: nginx:latest
+        command:
+          - sh
+          - -c
+        args:
+          - echo Hello, World!
+        resources: {}
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 3000
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+status:
+  startedAt: null
+  finishedAt: null

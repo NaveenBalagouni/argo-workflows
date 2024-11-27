@@ -5,6 +5,7 @@ metadata:
 spec:
   entrypoint: sample-nginx-world  # Corrected to match the template name
   templates:
+<<<<<<< HEAD
     - name: sample-nginx-world
       container:
         image: nginx:latest
@@ -13,3 +14,10 @@ spec:
           - -c
         args:
           - echo Hello, World!
+=======
+  - name: hello-world
+    container:
+      image: nginx:latest
+      command: [sh, -c]
+      args: ["echo Hello, World!"]
+>>>>>>> 6cc53b1a2d550c78d4af7bb23aa24aa17931f3b7
