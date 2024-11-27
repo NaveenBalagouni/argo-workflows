@@ -1,13 +1,15 @@
-# hello-world-workflow.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  name: hello-world
+  name: nginx-world
 spec:
-  entrypoint: hello-world
+  entrypoint: sample-nginx-world  # Corrected to match the template name
   templates:
-  - name: hello-world
-    container:
-      image: alpine:latest
-      command: [sh, -c]
-      args: ["echo Hello, World!"]
+    - name: sample-nginx-world
+      container:
+        image: nginx:latest
+        command:
+          - sh
+          - -c
+        args:
+          - echo Hello, World!
