@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: email-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: workflow-completed
+      eventSourceName: email-events  # This should match the metadata.name in EventSource
+      eventName: workflow-email
+  triggers:
+    - template:
+        name: email-notification
+        email:
+          host: "smtp.your-email-provider.com"  # Add the host here
+          port: 587  # Add the port here
+          from: "your-email@example.com"  # Add the sender address here
+          to:
+            - "naveen.balagouni@opsmx.io"
+          subject: "Workflow {{workflow.name}} Status"
+          body: |
+            Workflow {{workflow.name}} has completed with status: {{workflow.status}}.

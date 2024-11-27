@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: email-events  # This should match the eventSourceName in the sensor
+  namespace: argo-events
+spec:
+  email:
+    - name: "workflow-email"
+      smtp:
+        host: "smtp.your-email-provider.com"
+        port: 587
+        senderAddress: "your-email@example.com"
+        senderName: "Argo Workflows"
+        username: "your-smtp-username"
+        passwordSecret:
+          name: smtp-password
+          key: password
+      recipients:
+        - "recipient-email@example.com"
+      subject: "Argo Workflow {{workflow.name}} Status"
+      body: |
+        Workflow {{workflow.name}} completed with status: {{workflow.status}}

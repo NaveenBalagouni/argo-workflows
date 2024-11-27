@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: docker-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: docker-dep
+      eventSourceName: docker-event-source
+      eventName: example
+  triggers:
+    - template:
+        name: docker-trigger
+        argoWorkflow:
+          group: argoproj.io
+          version: v1alpha1
+          namespace: argo
+          resource: workflows
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: docker-workflow-
+              spec:
+                entrypoint: main
+                templates:
+                  - name: main
+                    container:
+                      image: alpine:latest
+                      command: [echo]
+                      args: ["Triggered by Docker Event!"]
+  serviceAccountName: argo-events-sa

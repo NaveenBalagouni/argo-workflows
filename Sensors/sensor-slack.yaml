@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: slack-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: workflow-completed
+      eventSourceName: slack-events   # This should match the EventSource name
+      eventName: example-slack-trigger  # This should match the EventSource trigger name
+  triggers:
+    - template:
+        name: slack-notification
+        slack:
+          token:
+            valueFrom:
+              secretKeyRef:
+                name: slack-token
+                key: eG94Yi0zMjA0MDQ4MzAxOTExLTMyMTIwNDc2NDA3OTAtdFVmRnF0a2d3WFQxd25xM2h6VnFNTHo3
+          channel: "#ISD-Notification"
+          message: "Workflow {{workflow.name}} has completed with status {{workflow.status}}."

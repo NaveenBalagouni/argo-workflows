@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: git-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: git-event
+      eventSourceName: git-events
+      eventName: example-repo
+  triggers:
+    - template:
+        name: argo-workflow-trigger
+        argoWorkflowTrigger:
+          group: argoproj.io
+          kind: Workflow
+          namespace: argo
+          name: git-workflow
+          operation: submit
+          parameters:
+            - name: git_commit
+              value: "{{event.payload.after}}"
+            - name: git_ref
+              value: "{{event.payload.ref}}"

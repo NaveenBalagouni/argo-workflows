@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: git-sensor
+  namespace: argo-events
+spec:
+  triggers:
+    - template:
+        name: git-trigger
+        http:
+          url: "http://localhost:8080"  # URL for the webhook to trigger the workflow
+          method: POST
+  eventSourceRef:
+    name: git-event-source  # Reference to the event source

@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: git-events
+  namespace: argo-events
+spec:
+  git:
+    example-repo:
+      repository: https://github.com/OpsMx/argo-sample-apps.git
+      webhook:
+        secretRef:
+          name: git-secret
+        port: "12000"
+        endpoint: /push

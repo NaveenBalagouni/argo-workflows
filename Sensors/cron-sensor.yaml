@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: cron-sensor
+  namespace: argo-events
+spec:
+  schedule: "*/5 * * * *"  # Cron expression to trigger every 5 minutes
+  dependencies:
+    - name: cron-dependency
+      eventSourceName: cron-events   # This event source will provide the cron event
+      eventName: cron-schedule
+  triggers:
+    - template:
+        name: cron-trigger
+        http:
+          url: "http://localhost:8080"  # URL to trigger the workflow
+          method: POST

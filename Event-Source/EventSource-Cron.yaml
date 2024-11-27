@@ -1,0 +1,9 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: cron-events
+  namespace: argo-events
+spec:
+  cron:
+    cron-schedule:
+      schedule: "*/5 * * * *"  # Same cron expression to trigger every 5 minutes
