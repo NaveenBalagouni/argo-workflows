@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTriggerTemplate
+metadata:
+  name: webhook-trigger-template
+spec:
+  triggers:
+    - template:
+        name: example-workflow
+        arguments:
+          - name: gitRepo
+            value: "https://github.com/NaveenBalagouni/argo-workflows.git"
+  webhook:
+    endpoint: /webhook  # This should match the endpoint defined in NGINX config

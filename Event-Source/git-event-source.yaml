@@ -6,7 +6,7 @@ metadata:
 spec:
   git:
     example-repo:
-      repository: https://github.com/OpsMx/argo-sample-apps.git
+      repository: https://github.com/NaveenBalagouni/argo-workflows.git
       webhook:
         secretRef:
           name: git-secret

@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook-sensor
+spec:
+  dependencies:
+    - name: webhook-dep
+      eventSourceName: webhook-source
+      eventName: nginx-webhook
+  triggers:
+    - template:
+        name: run-nginx-deployment
+        workflow:
+          ref: nginx-deployment
+          arguments:
+            - name: git-repo-url
+              value: "https://github.com/NaveenBalagouni/argo-workflows.git"
