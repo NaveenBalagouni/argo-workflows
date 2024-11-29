@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: 'https://github.com/NaveenBalagouni/argo-workflows.git'
     path: isd-helm-resource
-    targetRevision: main
+    targetRevision: HEAD
     helm:
       valueFiles:
         - values.yaml
