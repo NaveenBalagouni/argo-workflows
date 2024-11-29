@@ -1,41 +1,38 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
 metadata:
-  name: nginx-deployment
+  name: nginx-deploy
+  namespace: argo  # Namespace where Argo Workflows runs
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:latest
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-      volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config-map
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  entrypoint: nginx-deploy  # Define the entrypoint
+  templates:
+    - name: nginx-deploy
+      resource:
+        action: apply
+        manifest: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: nginx-deployment
+            namespace: nginx-argo  # Ensure the namespace is set to nginx-argo
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: nginx
+            template:
+              metadata:
+                labels:
+                  app: nginx
+              spec:
+                containers:
+                - name: nginx
+                  image: nginx:latest
+                  volumeMounts:
+                    - name: nginx-config-volume
+                      mountPath: /etc/nginx/nginx.conf
+                      subPath: nginx.conf
+            volumes:
+            - name: nginx-config-volume
+              configMap:
+                name: nginx-config-map  # Ensure this ConfigMap exists in the nginx-argo namespace
