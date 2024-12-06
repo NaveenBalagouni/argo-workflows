@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   name: nginx-deploy
-  namespace: argo  # Namespace where Argo Workflows runs
+  namespace: argo # Namespace where Argo Workflows runs
 spec:
   entrypoint: nginx-deploy  # Define the entrypoint
   templates:

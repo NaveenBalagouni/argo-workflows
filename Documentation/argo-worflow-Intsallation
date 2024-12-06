@@ -1,0 +1,15 @@
+Add Argo Helm Repository: Add the Argo Helm repository.  url: https://argoproj.github.io/argo-helm
+
+Step 1: helm repo add argo https://argoproj.github.io/argo-helm
+
+Step 2: helm repo update
+
+Step 3:  kubectl create namespace argo #### Create a Namespace for Argo Workflows
+
+Step 4:  helm install argo argo/argo-workflows --namespace argo     ######   install Argo Workflows
+
+Step 5: kubectl get all -n argo   ####Verify the Installation
+
+ 
+
+       
