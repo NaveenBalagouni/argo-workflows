@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: slack-notification-sensor
+  namespace: argo-events
+spec:
+  dependencies:
+    - name: workflow-dependency
+      eventSourceName: slack-event-source
+      eventName: workflow-completion
+  triggers:
+    - template:
+        name: slack-notification
+        slack:
+          webhook:
+            url: "<slack-webhook-url>"
+          channel: "#your-channel"
