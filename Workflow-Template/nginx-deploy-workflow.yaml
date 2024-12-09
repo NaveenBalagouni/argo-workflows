@@ -15,4 +15,4 @@ spec:
     container:
       image: nginx:latest
       command: [sh, -c]
-      args: ["echo 'Deploying sample Nginx'; sleep 10"]
+      args: ["echo 'Deploying sample Nginx image '; sleep 10"]
