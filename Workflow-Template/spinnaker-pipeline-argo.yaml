@@ -18,13 +18,13 @@ spec:
     container:
       image: nginx:latest 
       command: [sh, -c]
-      args: ["echo 'Building application...' && sleep 10"]
+      args: ["echo 'Building applications...' && sleep 10"]
 
   - name: test
     container:
       image: nginx:latest 
       command: [sh, -c]
-      args: ["echo 'Running tests...' && sleep 10"]
+      args: ["echo 'Running test...' && sleep 10"]
 
   - name: deploy
     container:
