@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/NaveenBalagouni/argo-workflows.git
     targetRevision: HEAD
-    path: charts/my-app
+    path: Workflow-Template/nginx-sample
   syncPolicy:
     automated:
       prune: true
