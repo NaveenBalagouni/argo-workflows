@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/my-org/my-repo
+    targetRevision: HEAD
+    path: charts/my-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  hooks:
+    sync:
+      postSync:
+        - exec:
+            command:
+              - /bin/sh
+              - -c
+              - >
+                curl -X POST https://argo.srini-striks.opsmx.co/webhook -H "Content-Type: application/json" -d '{"trigger": "argocd-sync"}'
