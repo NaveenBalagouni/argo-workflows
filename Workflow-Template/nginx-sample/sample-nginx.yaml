@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: nginx-deploy
-  namespace: argo
+  namespace: test
 spec:
   entrypoint: nginx-deployment
   templates:
