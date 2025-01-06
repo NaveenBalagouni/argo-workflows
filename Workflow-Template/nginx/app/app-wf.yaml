@@ -7,7 +7,7 @@ spec:
     namespace: default
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://github.com/my-org/my-repo
+    repoURL: https://github.com/NaveenBalagouni/argo-workflows.git
     targetRevision: HEAD
     path: charts/my-app
   syncPolicy:
