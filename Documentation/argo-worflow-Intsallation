@@ -10,6 +10,13 @@ Step 4:  helm install argo argo/argo-workflows --namespace argo     ######   ins
 
 Step 5: kubectl get all -n argo   ####Verify the Installation
 
+
+kubectl edit deploy -n argo argo-server
+spec:
+      containers:
+      - args:
+        - --auth-mode=server
+
  
 
        
