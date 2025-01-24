@@ -76,4 +76,6 @@ spec:
             
 
             # Run the Helm upgrade command with the cloned chart
+            helm template opsmx-release /workspace/my-chart --namespace argo-workflows
+
             helm upgrade --install opsmx-release /workspace/my-chart --namespace argo-workflows
