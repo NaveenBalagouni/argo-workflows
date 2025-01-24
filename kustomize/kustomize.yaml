@@ -11,7 +11,7 @@ spec:
       steps:
         - - name: kustomize-deploy
             template: kustomize-deploy
-        - - name: helm-deploy
+          - name: helm-deploy
             template: helm-deploy
 
     - name: kustomize-deploy
