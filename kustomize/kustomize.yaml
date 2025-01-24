@@ -72,7 +72,7 @@ spec:
             # Change to the correct directory
             cd /workspace/my-chart
             echo "Current directory: $(pwd)"
-            ls -ltra workspace
+            ls -ltra workspace/my-chart
 
             # Run the Helm upgrade command with the cloned chart
             helm upgrade --install opsmx-release /workspace/my-chart --namespace argo-workflows
