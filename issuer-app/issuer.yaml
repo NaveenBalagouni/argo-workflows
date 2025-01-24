@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: deploy-pipeline
+  namespace: argo-workflows
 spec:
   entrypoint: deploy-pipeline
   serviceAccountName: argo-workflows-sa
