@@ -60,10 +60,7 @@ spec:
             # Install git to clone Helm chart
             apk update && apk add --no-cache git
 
-            # Create the required directory
-            echo "Creating /workspace/my-chart directory"
-            mkdir -p /workspace/my-chart
-            echo "Directory /workspace/my-chart created"
+           
 
             # Clone the Helm chart repository from GitHub into /workspace/helm-chart
             echo "Cloning Helm chart repository..."
