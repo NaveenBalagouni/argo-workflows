@@ -21,10 +21,10 @@ spec:
                   value: "NaveenBalagouni"
                 # Replace with your actual token or use a secret
 
-        - - name: maven-build
+          - name: maven-build
             template: maven-build
           
-        - - name: kaniko-build-push
+          - name: kaniko-build-push
             template: kaniko-build-push
 
         
