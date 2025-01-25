@@ -79,6 +79,7 @@ spec:
             echo "Git Token: ${git_credentials}"
             
             git clone -b ${git_branch} ${git_url} /mnt/git-repo
+            ls -ltra /mnt/git-repo/
            
             mvn -B -DskipTests clean install -e
 
@@ -147,28 +148,19 @@ spec:
             echo "Git Branch: ${git_branch}"
             echo "Git Username: ${git_username}"
             
-            git clone ${git_url} /mnt/git-repo
+            git clone ${git_url} /mnt/git-repo/
             echo "Current directory: $(pwd)"
-            ls -ltra /mnt/git-repo
-            cd /mnt/git-repo
+            ls -ltra /mnt/git-repo/
             
-            # Checking if artifact file exists
-            if [ -f /mnt/git-repo/ ]; then
-              echo "Artifact file found!"
-              echo "v1.0.0" > /mnt/git-repo/artifact
-            else
-              echo "Artifact file not found!"
-            fi
+            echo "v1.0.0" > /mnt/git-repo/artifact
+        
 
             image=$(cat /mnt/git-repo/artifact)
             echo "Image tag: $image"
 
-            # Checking if values.yaml exists:
-            if [ -f /mnt/git-repo/values.yaml ]; then
-              yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
-            else
-              echo "values.yaml file not found!"
-            fi
+          
+            yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
+           
 
             echo "Pushing changes to GitHub..."
             git push https://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
