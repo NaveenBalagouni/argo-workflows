@@ -148,20 +148,22 @@ spec:
             echo "Git URL: ${git_url}"
             echo "Git Branch: ${git_branch}"
             echo "Git Username: ${git_username}"
+
+            echo "Cloning Git repository..."
             
             git clone ${git_url} /mnt/git-repo
+            
             echo "Current directory: $(pwd)"
             ls -ltra /mnt/git-repo/
-    
-        
-
-            image=$(cat /mnt/git-repo/)
+             
+            # Checking if artifact file exists
+            image=$(cat /mnt/git-repo/artifact)
             echo "Image tag: $image"
 
           
             yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
            
-
+            cd /mnt/git-repo
             echo "Pushing changes to GitHub..."
             git push https://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
         env:
