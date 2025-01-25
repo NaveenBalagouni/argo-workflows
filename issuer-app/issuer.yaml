@@ -11,15 +11,6 @@ spec:
       steps:
         - - name: clone-repo
             template: clone-repo
-            arguments:
-              parameters:
-                - name: git-url
-                  value: "https://github.com/NaveenBalagouni/deploy-pipeline.git"
-                - name: git-branch
-                  value: "main"
-                - name: git-username
-                  value: "NaveenBalagouni"
-                # Replace with your actual token or use a secret
 
           - name: maven-build
             template: maven-build
@@ -27,25 +18,21 @@ spec:
           - name: kaniko-build-push
             template: kaniko-build-push
 
-        
           - name: update-values-yaml
             template: update-values-yaml
 
-       
-
     - name: clone-repo
-      inputs:
-        parameters:
-          - name: git-url
-          - name: git-branch
-          - name: git-username
-          - name: git-credentials
       container:
         image: "quay.io/opsmxpublic/opsmx-custom-binaries:kubectl-spin-cli-git-bash-jq-yq-argocd-v2"
         command: ["/bin/bash", "-c"]
         args:
           - |
             echo "Cloning repository and checking out branch..."
+            git_url=$(echo $GIT_URL)
+            git_branch=$(echo $GIT_BRANCH)
+            git_username=$(echo $GIT_USERNAME)
+            git_credentials=$(echo $GIT_TOKEN)
+            
             echo "Git URL: ${git_url}"
             echo "Git Branch: ${git_branch}"
             echo "Git Username: ${git_username}"
@@ -55,14 +42,24 @@ spec:
             cd /mnt/git-repo
             git checkout ${git_branch}
         env:
-          - name: git_url
-            value: "{{inputs.parameters.git-url}}"
-          - name: git_branch
-            value: "{{inputs.parameters.git-branch}}"
-          - name: git_username
-            value: "{{inputs.parameters.git-username}}"
-          - name: git_credentials
-            value: "{{inputs.parameters.git-credentials}}"
+          - name: GIT_URL
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-url
+          - name: GIT_BRANCH
+            value: "main"
+          - name: GIT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-username
+          - name: GIT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: gittoken
+
     - name: maven-build
       container:
         image: "maven"
@@ -71,93 +68,68 @@ spec:
           - |
             echo "Building project with Maven..."
             echo "Cloning repository and checking out branch..."
-            # Clone the repository
-            git clone -b main https://github.com/NaveenBalagouni/deploy-pipeline.git /project
-            echo "Cloning successful, changing directory..."
-            # Change to the cloned repository directory
-            cd /project
-            echo "Current directory: $(pwd)"
-            ls -l /project
-            ls -l /project
-            echo "POM file found. Running Maven build..."
+            git_url=$(echo $GIT_URL)
+            git_branch=$(echo $GIT_BRANCH)
+            git_username=$(echo $GIT_USERNAME)
+            git_credentials=$(echo $GIT_TOKEN)
+            
+            echo "Git URL: ${git_url}"
+            echo "Git Branch: ${git_branch}"
+            echo "Git Username: ${git_username}"
+            echo "Git Token: ${git_credentials}"
+            
+            git clone -b ${git_branch} ${git_url} /mnt/git-repo
+           
             mvn -B -DskipTests clean install -e
 
-   
-    - name: kaniko-build-push
+        env:
+          - name: GIT_URL
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-url
+          - name: GIT_BRANCH
+            value: "main"
+          - name: GIT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-username
+          - name: GIT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-token
 
+    - name: kaniko-build-push
+      inputs:
+        parameters:
+          - name: docker-registry
+            value: quay.io
+          - name: docker-image
+            value: opsmxpublic/baseline-issuegen
+          - name: image-tag
+            value: latest
       container:
-        image: "bitnami/kaniko"
+        image: gcr.io/kaniko-project/executor:v1.9.0-debug
         imagePullPolicy: Always
-        command: ["/kaniko/executor"]  # Debug command
-        # (if we set cache true we should make an ECR container update)
-        # i gave the full path to the docker file but maybe relative is fine
-       
+        command: ["/kaniko/executor"]
         args:
           [
-          "--context=git://github.com/NaveenBalagouni/kaniko-build.git",
-          "--dockerfile=/kaniko/Dockerfile",
-          "--destination=$(DOCKER_REGISTRY)/$(DOCKER_IMAGE):latest",
-          
-          "--cache=true",
-          "--verbosity=debug",
-
+            "--context=git://github.com/NaveenBalagouni/kaniko-build.git",
+            "--dockerfile=/kaniko/Dockerfile",
+            "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
           ]
-          
-
-        env:
-          - name: DOCKER_REGISTRY
-            value: "docker.io"
-          - name: DOCKER_IMAGE
-            value: "naveenbalagouni/baseline-issuegen"
-          - name: IMAGE_TAG
-            value: "latest"
-          - name: DOCKER_CONFIG
-            value: "/kaniko/.docker/"
-            volumes:
-            - name: docker-config-volume
-              secret:
-              secretName: docker-credential
-
-          - name: DOCKER_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: docker-credential  # Reference to Docker Hub username secret
-                key: username
-          - name: DOCKER_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: docker-credential  # Reference to Docker Hub password/token secret
-                key: password
-       
         volumeMounts:
           - name: docker-config-volume
             mountPath: /kaniko/.docker/
-
       volumes:
         - name: docker-config-volume
           secret:
-          secretName: docker-credential
-
-      restartPolicy: Never
-      imagePullSecrets:
-        - name: docker-credential  # Reference to the secret for pulling images
-       
-      pre-build:
-        script:
-          - echo "Logging into Docker registry"
-          - echo $DOCKER_USERNAME
-          - echo $DOCKER_PASSWORD
-
-         # Debug: check the contents of the mounted credentials
-          - ls -al /kaniko/.docker/  # List the files in the Docker config folder
-          - cat /kaniko/.docker/config.json  # Print the contents of the Docker config file
-
-         # Proceed with login using the token
-          - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin $DOCKER_REGISTRY
-          - docker info  # Optional: Logs docker info to check login status
-      
-      
-
+            secretName: docker-credentialsquay
+            items:
+              - key: .dockerconfigjson
+                path: config.json
 
     - name: update-values-yaml
       container:
@@ -166,46 +138,53 @@ spec:
         args:
           - |
             echo "Cloning Git repository..."
-
-            git clone https://github.com/NaveenBalagouni/kaniko-build.git /mnt/git-repo && break || sleep 10
-            echo "Listing repository contents:"
-            ls /mnt/git-repo
-
+            git_url=$(echo $GIT_URL)
+            git_branch=$(echo $GIT_BRANCH)
+            git_username=$(echo $GIT_USERNAME)
+            git_credentials=$(echo $GIT_TOKEN)
+            
+            echo "Git URL: ${git_url}"
+            echo "Git Branch: ${git_branch}"
+            echo "Git Username: ${git_username}"
+            
+            git clone ${git_url} /mnt/git-repo
+            cd /mnt/git-repo
+            
             # Checking if artifact file exists
-            echo "Checking if artifact file exists..."
             if [ -f /mnt/git-repo/artifact ]; then
               echo "Artifact file found!"
               echo "v1.0.0" > /mnt/git-repo/artifact
-              echo "Artifact file created."
             else
               echo "Artifact file not found!"
             fi
 
             image=$(cat /mnt/git-repo/artifact)
             echo "Image tag: $image"
-       
+
             # Checking if values.yaml exists:
-            echo "Checking if values.yaml exists:"
             if [ -f /mnt/git-repo/helm-app/values.yaml ]; then
               yq eval ".image = \"$image\"" -i /mnt/git-repo/helm-app/values.yaml
             else
               echo "values.yaml file not found!"
             fi
 
-              echo "Pushing changes to GitHub..."
-
-            # Ensure you're inside a git repository
-            cd /mnt/git-repo
-
-            # GitHub repository URL with authentication token
-           
-            REPO_URL="https://github.com/NaveenBalagouni/kaniko-build.git"
-            BRANCH=main
-
-            # Push to GitHub using the token for authentication
-            git push https://$GITHUB_TOKEN@github.com/NaveenBalagouni/kaniko-build.git $BRANCH
-
-
-        
-
-
+            echo "Pushing changes to GitHub..."
+            git push https://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
+        env:
+          - name: GIT_URL
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-url
+          - name: GIT_BRANCH
+            value: "main"
+          - name: GIT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-username
+          - name: GIT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: git-credentials
+                key: git-token
