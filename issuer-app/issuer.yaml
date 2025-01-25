@@ -117,7 +117,7 @@ spec:
         args:
           [
             "--context=git://github.com/NaveenBalagouni/kaniko-build.git",
-            "--dockerfile=/kaniko/Dockerfile",
+            "--dockerfile=/mnt/git-repo/Dockerfile",
             "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
           ]
         volumeMounts:
@@ -148,10 +148,12 @@ spec:
             echo "Git Username: ${git_username}"
             
             git clone ${git_url} /mnt/git-repo
+            echo "Current directory: $(pwd)"
+            ls -ltra /mnt/git-repo
             cd /mnt/git-repo
             
             # Checking if artifact file exists
-            if [ -f /mnt/git-repo/artifact ]; then
+            if [ -f /mnt/git-repo/ ]; then
               echo "Artifact file found!"
               echo "v1.0.0" > /mnt/git-repo/artifact
             else
@@ -162,8 +164,8 @@ spec:
             echo "Image tag: $image"
 
             # Checking if values.yaml exists:
-            if [ -f /mnt/git-repo/helm-app/values.yaml ]; then
-              yq eval ".image = \"$image\"" -i /mnt/git-repo/helm-app/values.yaml
+            if [ -f /mnt/git-repo/values.yaml ]; then
+              yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
             else
               echo "values.yaml file not found!"
             fi
