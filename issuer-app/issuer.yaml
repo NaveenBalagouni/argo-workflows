@@ -149,11 +149,10 @@ spec:
             echo "Git Branch: ${git_branch}"
             echo "Git Username: ${git_username}"
             
-            git clone ${git_url} /mnt/git-repo/
+            git clone ${git_url} /mnt/git-repo
             echo "Current directory: $(pwd)"
             ls -ltra /mnt/git-repo/
-            
-            echo "v1.0.0" > /mnt/git-repo/artifact
+    
         
 
             image=$(cat /mnt/git-repo/artifact)
