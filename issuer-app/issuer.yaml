@@ -163,7 +163,7 @@ spec:
            
 
             echo "Pushing changes to GitHub..."
-            git push git://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
+            git push https://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
         env:
           - name: GIT_URL
             valueFrom:
