@@ -99,7 +99,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: git-credentials
-                key: git-token
+                key: gittoken
 
     - name: kaniko-build-push
       inputs:
@@ -187,4 +187,4 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: git-credentials
-                key: git-token
+                key: gittoken
