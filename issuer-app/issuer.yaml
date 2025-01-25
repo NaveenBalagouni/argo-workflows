@@ -160,7 +160,7 @@ spec:
             echo "Image tag: $image"
 
           
-            yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
+            yq eval ".image = \"$image\"" -i /mnt/git-repo/
            
 
             echo "Pushing changes to GitHub..."
