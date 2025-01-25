@@ -155,7 +155,7 @@ spec:
     
         
 
-            image=$(cat /mnt/git-repo/artifact)
+            image=$(cat /mnt/git-repo/)
             echo "Image tag: $image"
 
           
