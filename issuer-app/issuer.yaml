@@ -80,7 +80,7 @@ spec:
             ls -l /project
             ls -l /project
             echo "POM file found. Running Maven build..."
-            mvn clean install
+            mvn -B -DskipTests clean install -e
 
    
     - name: kaniko-build-push
