@@ -78,7 +78,7 @@ spec:
             echo "Git Username: ${git_username}"
             echo "Git Token: ${git_credentials}"
             
-            git clone -b ${git_branch} ${git_url} /mnt/git-repo
+            git clone -b ${git_branch} ${git_url} /mnt/git-repo/
             ls -ltra /mnt/git-repo/
            
             mvn -B -DskipTests clean install -e
