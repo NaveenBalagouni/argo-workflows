@@ -154,6 +154,7 @@ spec:
             git clone ${git_url} /mnt/git-repo
             
             echo "Current directory: $(pwd)"
+            cd /mnt/git-repo
             ls -ltra /mnt/git-repo/
              
             # Checking if artifact file exists
@@ -163,8 +164,12 @@ spec:
           
             yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
            
-            cd /mnt/git-repo
+           
             echo "Pushing changes to GitHub..."
+            git config user.name "$GIT_USERNAME"
+            git config user.email "$GIT_USERNAME@users.noreply.github.com"
+            git add /mnt/git-repo/values.yaml
+            git commit -m "Update image tag in values.yaml"
             git push https://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
         env:
           - name: GIT_URL
