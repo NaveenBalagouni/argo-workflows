@@ -167,6 +167,9 @@ spec:
 
             ls -ltra /mnt/git-repo/
             yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
+            
+            # Check the contents of values.yaml to verify the change
+            cat /mnt/git-repo/values.yaml
            
            
             echo "Pushing changes to GitHub..."
