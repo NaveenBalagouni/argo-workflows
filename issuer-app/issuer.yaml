@@ -157,7 +157,7 @@ spec:
             git clone ${git_url} /mnt/git-repo
             
             echo "Current directory: $(pwd)"
-            ls -l /mnt/git-repo/
+            ls -ltra /mnt/git-repo/
             cd /mnt/git-repo/
              
             # Checking if artifact file exists
