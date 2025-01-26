@@ -158,6 +158,8 @@ spec:
             
             echo "Current directory: $(pwd)"
             ls /mnt/git-repo/  
+            ls -l /mnt/git-repo/
+
             
             cd /mnt/git-repo/
             ls -ltra /mnt/git-repo/
