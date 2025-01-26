@@ -158,12 +158,7 @@ spec:
             
             echo "Current directory: $(pwd)"
             ls -l /mnt/git-repo/
-            cd /mnt/git-repo
-            ls -a /mnt/git-repo/
-           
-            ls -ltra /mnt/git-repo/
-            ls -l /mnt/git-repo/
-           
+            cd /mnt/git-repo/
              
             # Checking if artifact file exists
             image=$(cat /mnt/git-repo/artifact)
@@ -174,8 +169,7 @@ spec:
            
            
             echo "Pushing changes to GitHub..."
-            cd /mnt/git-repo
-            git init
+
             git config user.name "$GIT_USERNAME"
             git config user.email "naveen.balagouni@opsmx.io"
             git add /mnt/git-repo/values.yaml
