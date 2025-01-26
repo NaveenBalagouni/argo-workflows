@@ -154,7 +154,7 @@ spec:
 
             echo "Cloning Git repository..."
             
-            git clone ${git_url} /mnt/git-repo
+            git clone ${git_url} /mnt/git-repo/
             
             echo "Current directory: $(pwd)"
             ls /mnt/git-repo/  
