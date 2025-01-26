@@ -159,11 +159,8 @@ spec:
             echo "Current directory: $(pwd)"
             ls /mnt/git-repo/  
             ls -l /mnt/git-repo/
-
             
-            cd /mnt/git-repo/
-            ls -ltra /mnt/git-repo/
-             
+            echo "v1.0.0" > /mnt/git-repo/artifact  
             # Checking if artifact file exists
             image=$(cat /mnt/git-repo/artifact)
             echo "Image tag: $image"
@@ -173,12 +170,15 @@ spec:
            
            
             echo "Pushing changes to GitHub..."
-
+            
+            cd /mnt/git-repo/
+            ls -ltra /mnt/git-repo/
+            
             git config user.name "$GIT_USERNAME"
             git config user.email "naveen.balagouni@opsmx.io"
             git add /mnt/git-repo/values.yaml
             git commit -m "Update image tag in values.yaml"
-            git push https://$GIT_USERNAME:$GIT_TOKEN@${git_url} $GIT_BRANCH
+            git push https:$GIT_TOKEN@$github.com/NaveenBalagouni/kaniko-build.git $GIT_BRANCH
         env:
           - name: GIT_URL
             valueFrom:
