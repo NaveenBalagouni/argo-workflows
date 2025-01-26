@@ -82,10 +82,10 @@ spec:
             cd /mnt/git-repo
             ls -ltra /mnt/git-repo/
 
-            mvn clean install -X
+            #mvn clean install -X
 
             
-            #mvn -B -DskipTests clean install -e
+            mvn -B -DskipTests clean install -e
 
         env:
           - name: GIT_URL
