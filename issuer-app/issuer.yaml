@@ -158,7 +158,7 @@ spec:
             cd /mnt/git-repo
             
             echo "Current directory: $(pwd)"
-            ls /mnt/git-repo
+            ls -ltra /mnt/git-repo/
             
             echo "v1.0.0" > /mnt/git-repo/artifact  
             # Checking if artifact file exists
