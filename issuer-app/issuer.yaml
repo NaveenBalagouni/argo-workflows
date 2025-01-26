@@ -165,20 +165,20 @@ spec:
             image=$(cat /mnt/git-repo/artifact)
             echo "Image tag: $image"
 
-          
+            cd /mnt/git-repo/
+            ls -ltra /mnt/git-repo/
             yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
            
            
             echo "Pushing changes to GitHub..."
             
-            cd /mnt/git-repo/
-            ls -ltra /mnt/git-repo/
+          
             
             git config user.name "$GIT_USERNAME"
             git config user.email "naveen.balagouni@opsmx.io"
             git add /mnt/git-repo/values.yaml
             git commit -m "Update image tag in values.yaml"
-            git push https:$GIT_TOKEN@$github.com/NaveenBalagouni/kaniko-build.git $GIT_BRANCH
+            git push https://$GIT_USERNAME:$GIT_TOKEN@github.com/NaveenBalagouni/kaniko-build.git $GIT_BRANCH
         env:
           - name: GIT_URL
             valueFrom:
