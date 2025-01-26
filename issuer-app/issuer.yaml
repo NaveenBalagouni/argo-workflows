@@ -157,7 +157,7 @@ spec:
             git clone ${git_url} /mnt/git-repo
             
             echo "Current directory: $(pwd)"
-            ls -l /mnt/
+            ls -l /mnt/git-repo
             cd /mnt/git-repo
             ls -a /mnt/git-repo/
            
