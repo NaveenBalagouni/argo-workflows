@@ -177,7 +177,7 @@ spec:
           
             
             git config user.name "$GIT_USERNAME"
-            git config user.email "naveen.balagouni@opsmx.io"
+
             git add /mnt/git-repo/values.yaml
             git commit -m "Update image tag in values.yaml"
             git push https://$GIT_USERNAME:$GIT_TOKEN@github.com/NaveenBalagouni/kaniko-build.git $GIT_BRANCH
