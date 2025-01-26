@@ -189,6 +189,7 @@ spec:
               secretKeyRef:
                 name: git-credentials
                 key: git-username
+          
           - name: GIT_TOKEN
             valueFrom:
               secretKeyRef:
