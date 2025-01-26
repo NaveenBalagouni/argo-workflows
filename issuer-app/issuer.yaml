@@ -165,7 +165,6 @@ spec:
             image=$(cat /mnt/git-repo/artifact)
             echo "Image tag: $image"
 
-            cd /mnt/git-repo/
             ls -ltra /mnt/git-repo/
             yq eval ".image = \"$image\"" -i /mnt/git-repo/values.yaml
            
