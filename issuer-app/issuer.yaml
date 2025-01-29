@@ -116,10 +116,11 @@ spec:
 
     - name: clone-repository
       container:
-        image: alpine:latest  # A minimal image with Git available
-        command: ["/bin/sh", "-c"]
+        image: ubuntu:latest  # A minimal image with Git available
+        command: ["/bin/bash", "-c"]
         args:
           - |
+            apt-get update && apt-get install -y git  # Install git
             echo "Cloning repository..."
             git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
             ls -l /mnt/git-repo  # Verify if Dockerfile exists here
