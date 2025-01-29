@@ -37,7 +37,7 @@ spec:
             echo "Git Branch: ${git_branch}"
             echo "Git Username: ${git_username}"
             git config --global credential.helper store
-            echo "https://${git_username}:${git_credentials}@${git_url}" > /mnt/git-repo/.git-credentials
+            mkdir -p /mnt/git-repo && echo "https://${git_username}:${git_credentials}@github.com" > /mnt/git-repo/.git-credentials
             git clone -b ${git_branch} ${git_url} /mnt/git-repo
             cd /mnt/git-repo
             git checkout ${git_branch}
