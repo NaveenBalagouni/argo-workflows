@@ -146,6 +146,7 @@ spec:
           - "--context=github.com/NaveenBalagouni/deploy-pipeline.git"  # Use the mounted path
           - "--dockerfile=/mnt/git-repo/Dockerfile"  # Path to the Dockerfile within the cloned repo
           - "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
+           - "--verbosity=debug"
             
          #   args:
           #[
