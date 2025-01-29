@@ -39,7 +39,7 @@ spec:
             git config --global credential.helper store
             echo "/mnt/git-repo already exists, cleaning up..."
             rm -rf /mnt/git-repo
-            mkdir -p /mnt/git-repo
+          
             echo "https://${git_username}:${git_credentials}@github.com" > /mnt/git-repo/.git-credentials
             git clone -b ${git_branch} ${git_url} /mnt/git-repo
             cd /mnt/git-repo
