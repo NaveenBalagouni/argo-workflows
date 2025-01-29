@@ -42,6 +42,7 @@ spec:
           
             echo "https://${git_username}:${git_credentials}@github.com" > /mnt/git-repo/.git-credentials
             git clone -b ${git_branch} ${git_url} /mnt/git-repo
+            ls -l /mnt/git-repo  # Verify the Dockerfile is present here
             cd /mnt/git-repo
             git checkout ${git_branch}
         env:
