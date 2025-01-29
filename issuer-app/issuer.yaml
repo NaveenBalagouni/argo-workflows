@@ -175,7 +175,8 @@ spec:
             git config git-email "$GIT_EMAIL"
             git add /mnt/git-repo/values.yaml
             git commit -m "Update image tag in values.yaml"
-            git push https://$GIT_USERNAME:$GIT_TOKEN@github.com/NaveenBalagouni/kaniko-build.git $GIT_BRANCH
+            git push https://$GIT_USERNAME:$GIT_TOKEN@github.com/NaveenBalagouni/deploy-pipeline.git $GIT_BRANCH
+            
         env:
           - name: GIT_URL
             valueFrom:
