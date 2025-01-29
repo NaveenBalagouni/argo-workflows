@@ -168,8 +168,8 @@ spec:
             cd /mnt/git-repo
             echo "Pushing changes to GitHub..."
             # Set user details (make sure these are set correctly)
-            git config git-username "$GIT_USERNAME"
-            git config git-email "$GIT_EMAIL"
+            git config user.name "$GIT_USERNAME"
+            git config user.email "$GIT_EMAIL"
             git add /mnt/git-repo/values.yaml
             git commit -m "Update image tag in values.yaml"
             git push https://$GIT_USERNAME:$GIT_TOKEN@github.com/NaveenBalagouni/deploy-pipeline.git $GIT_BRANCH
@@ -194,7 +194,7 @@ spec:
                 name: git-credentials
                 key: gittoken 
 
-          - name: $GIT_EMAIL
+          - name: GIT_EMAIL
             valueFrom:
               secretKeyRef:
                 name: git-credentials
