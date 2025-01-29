@@ -131,7 +131,6 @@ spec:
             ls -l /mnt/git-repo  # Verify if Dockerfile exists here
             echo "Building Docker image using Kaniko..."
             /kaniko/executor --context=/mnt/git-repo --dockerfile=/mnt/git-repo/Dockerfile --destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
-  
              # --context=/mnt/git-repo \
               #--dockerfile=/mnt/git-repo/Dockerfile \
               #--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
