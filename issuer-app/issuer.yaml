@@ -143,14 +143,20 @@ spec:
         args:
           - |
             echo "Cloning Git repository..."
-            git_url=$(echo $GIT_URL)
-            git_branch=$(echo $GIT_BRANCH)
-            git_username=$(echo $GIT_USERNAME)
-            git_credentials=$(echo $GIT_TOKEN)
+            echo "GIT_URL: $GIT_URL"
+            echo "GIT_BRANCH: $GIT_BRANCH"
+            echo "GIT_USERNAME: $GIT_USERNAME"
+            echo "GIT_TOKEN: $GIT_TOKEN"
+            echo "GIT_EMAIL: $GIT_EMAIL"
             
-            echo "Git URL: ${git_url}"
-            echo "Git Branch: ${git_branch}"
-            echo "Git Username: ${git_username}"
+            git_url=$GIT_URL
+            git_branch=$GIT_BRANCH
+            git_username=$GIT_USERNAME
+            git_credentials=$GIT_TOKEN
+
+            echo "Setting up Git credentials..."
+            git config --global credential.helper store
+            echo "https://${git_username}:${git_credentials}@github.com" > /mnt/git-repo/.git-credentials
 
             echo "Cloning Git repository..."
             git clone ${git_url} /mnt/git-repo
