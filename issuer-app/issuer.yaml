@@ -86,6 +86,7 @@ spec:
             ls -ltra /mnt/git-repo
 
             mvn clean install -X -e > maven-debug.log 2>&1
+            cat /mnt/git-repo/maven-debug.log
             
             #mvn -B -DskipTests clean install -e
 
