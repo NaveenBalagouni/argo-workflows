@@ -126,13 +126,12 @@ spec:
         command: ["/kaniko/executor"]
         args:
           - |
-            # Clone the Git repository to /mnt/git-repo
             echo "Cloning repository..."
             git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
             ls -l /mnt/git-repo  # Verify if Dockerfile exists here
-            # Run Kaniko executor
+            echo "Building Docker image using Kaniko..."
             /kaniko/executor --context=/mnt/git-repo --dockerfile=/mnt/git-repo/Dockerfile --destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
-            #/kaniko/executor \
+  
              # --context=/mnt/git-repo \
               #--dockerfile=/mnt/git-repo/Dockerfile \
               #--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
