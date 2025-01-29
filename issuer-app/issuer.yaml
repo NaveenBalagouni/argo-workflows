@@ -153,10 +153,7 @@ spec:
             echo "Git Username: ${git_username}"
 
             echo "Cloning Git repository..."
-            
             git clone ${git_url} /mnt/git-repo
-            
-            
             echo "Current directory: $(pwd)"
             ls -ltra /mnt/git-repo/
             
