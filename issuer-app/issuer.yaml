@@ -123,9 +123,12 @@ spec:
             apt-get update && apt-get install -y git  # Install git
             echo "Cloning repository..."
             git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
+            
+            # Change into the /mnt directory
             cd /mnt
-            ls -l /mnt/git-repo  # Verify if Dockerfile exists here
 
+            # List the files inside /mnt/git-repo to verify if the Dockerfile exists
+            ls -l /mnt/git-repo
     - name: kaniko-build-push
       inputs:
         parameters:
