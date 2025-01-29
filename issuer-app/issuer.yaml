@@ -156,7 +156,7 @@ spec:
 
             echo "Setting up Git credentials..."
             git config --global credential.helper store
-            echo "https://${git_username}:${git_credentials}@github.com" > /mnt/git-repo/.git-credentials
+            echo "https://${git_username}:${git_credentials}@github.com"
 
             echo "Cloning Git repository..."
             git clone ${git_url} /mnt/git-repo
