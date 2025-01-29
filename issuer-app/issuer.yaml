@@ -85,10 +85,11 @@ spec:
             cd /mnt/git-repo/
             ls -ltra /mnt/git-repo
 
-            mvn clean install -X -e > maven-debug.log 2>&1
-            cat /mnt/git-repo/maven-debug.log
+            #mvn clean install -X -e > maven-debug.log 2>&1
+            #cat /mnt/git-repo/maven-debug.log
             
-            #mvn -B -DskipTests clean install -e
+            mvn -B -DskipTests clean install -e > maven-debug.log 2>&1
+            cat /mnt/git-repo/maven-debug.log
 
         env:
           - name: GIT_URL
