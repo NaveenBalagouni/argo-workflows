@@ -126,7 +126,7 @@ spec:
             
             echo "Navigating to /mnt directory and listing contents..."
             cd /mnt/git-repo  # Navigate to /mnt directory
-            ls -l  # List the contents of /mnt
+            ls -a /mnt/git-repo # List the contents of /mnt
             echo "Now listing contents of /mnt/git-repo"
             ls -l /mnt/git-repo  # List files inside /mnt/git-repo to verify if Dockerfile exists
     - name: kaniko-build-push
