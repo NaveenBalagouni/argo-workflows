@@ -139,7 +139,7 @@ spec:
         imagePullPolicy: Always
         command: ["/kaniko/executor"]
         args:
-          - "--context=/kaniko/.docker/"  # Use the mounted path
+          - "--context=/mnt/git-repo"  # Use the mounted path
           - "--dockerfile=/mnt/git-repo/Dockerfile"  # Path to the Dockerfile within the cloned repo
           - "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
             
