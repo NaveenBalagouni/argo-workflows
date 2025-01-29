@@ -125,7 +125,7 @@ spec:
         command: ["/kaniko/executor"]
         args:
           [
-            "--context=git://github.com/NaveenBalagouni/kaniko-build.git",
+            "--context=github.com/NaveenBalagouni/deploy-pipeline.git",
             "--dockerfile=/mnt/git-repo/Dockerfile",
             "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
           ]
