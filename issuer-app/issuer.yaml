@@ -123,6 +123,7 @@ spec:
             apt-get update && apt-get install -y git  # Install git
             echo "Cloning repository..."
             git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
+            ls -l /mnt/git-repo/Dockerfile
             
             # Change into the /mnt directory
             cd /mnt
