@@ -123,7 +123,7 @@ spec:
       container:
         image: gcr.io/kaniko-project/executor:v1.9.0-debug
         imagePullPolicy: Always
-        command: ["/kaniko/executor"]
+        command: ["/bin/bash", "-c"]
         args:
           - |
             echo "Cloning repository..."
