@@ -123,14 +123,19 @@ spec:
       container:
         image: gcr.io/kaniko-project/executor:v1.9.0-debug
         imagePullPolicy: Always
-        command: ["/bin/sh", "-c"]
+        command: ["/kaniko/executor"]
         args:
-          - |
-            echo "Cloning repository..."
-            git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
-            ls -l /mnt/git-repo  # Verify if Dockerfile exists here
-            echo "Building Docker image using Kaniko..."
-            /kaniko/executor --context=/mnt/git-repo --dockerfile=/mnt/git-repo/Dockerfile --destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
+          - "--context=/kaniko/.docker/"  # Use the mounted path
+          - "--dockerfile=/mnt/git-repo/Dockerfile"  # Path to the Dockerfile within the cloned repo
+          - "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
+            
+         #   args:
+          #[
+           # "--context=github.com/NaveenBalagouni/deploy-pipeline.git",
+          #  "--dockerfile=/mnt/git-repo/Dockerfile",
+           # "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
+          #]
+            #/kaniko/executor --context=/mnt/git-repo --dockerfile=/mnt/git-repo/Dockerfile --destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
              # --context=/mnt/git-repo \
               #--dockerfile=/mnt/git-repo/Dockerfile \
               #--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}
