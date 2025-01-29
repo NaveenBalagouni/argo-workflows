@@ -123,6 +123,7 @@ spec:
             apt-get update && apt-get install -y git  # Install git
             echo "Cloning repository..."
             git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
+            cd /mnt
             ls -l /mnt/git-repo  # Verify if Dockerfile exists here
 
     - name: kaniko-build-push
@@ -140,7 +141,7 @@ spec:
         command: ["/kaniko/executor"]
         args:
           - "--context=/mnt/git-repo"  # Use the mounted path
-          - "--dockerfile=Dockerfile"  # Path to the Dockerfile within the cloned repo
+          - "--dockerfile=/mnt/git-repo/Dockerfile"  # Path to the Dockerfile within the cloned repo
           - "--destination={{inputs.parameters.docker-registry}}/{{inputs.parameters.docker-image}}:{{inputs.parameters.image-tag}}"
             
          #   args:
