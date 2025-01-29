@@ -125,7 +125,7 @@ spec:
             git clone https://github.com/NaveenBalagouni/deploy-pipeline.git /mnt/git-repo
             
             echo "Navigating to /mnt directory and listing contents..."
-            cd /mnt  # Navigate to /mnt directory
+            cd /mnt/git-repo  # Navigate to /mnt directory
             ls -l  # List the contents of /mnt
             echo "Now listing contents of /mnt/git-repo"
             ls -l /mnt/git-repo  # List files inside /mnt/git-repo to verify if Dockerfile exists
