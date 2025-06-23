@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: artifact-passing-
+  name: artifact-passing-workflow
   namespace: test
 spec:
   entrypoint: artifact-demo
