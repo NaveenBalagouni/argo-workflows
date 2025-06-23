@@ -1,7 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+kind: WorkflowTemplate
 metadata:
   generateName: argo-wf-  # Name of this Workflow
+  namespace: test
 spec:
   entrypoint: steps-template # Defines "steps-template" as the "main" template
   templates:
