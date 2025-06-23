@@ -10,7 +10,7 @@ spec:
   - name: artifact-demo
     script:
       image: alpine:3.6
-      command: [sh, -c]
+      command: [sh]
       source: |
         echo "hello world" > /tmp/hello.txt
       outputs:
