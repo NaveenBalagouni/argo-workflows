@@ -14,5 +14,5 @@ spec:
   - name: whalesay-nginx
     container:
        image: docker/whalesay
-      command: [cowsay]
-      args: ["hello world"]
+       command: [cowsay]
+       args: ["hello world"]
