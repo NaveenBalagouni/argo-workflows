@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dag-example-
+  namespace: test
+spec:
+  entrypoint: dag-example
+  templates:
+  - name: dag-example
+    dag:
+      tasks:
+      - name: A
+        template: echo
+        arguments: [{name: message, value: "Task A"}]
+      - name: B
+        dependencies: [A]
+        template: echo
+        arguments: [{name: message, value: "Task B (after A)"}]
+      - name: C
+        dependencies: [A]
+        template: echo
+        arguments: [{name: message, value: "Task C (after A)"}]
+      - name: D
+        dependencies: [B, C]
+        template: echo
+        arguments: [{name: message, value: "Task D (after B and C)"}]
+  - name: echo
+    inputs:
+      parameters: [{name: message}]
+    container:
+      image: alpine
+      command: [sh, -c]
+      args: ["echo {{inputs.parameters.message}}"]
