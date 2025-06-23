@@ -1,6 +1,6 @@
 # Submit with: argo submit artifact-passing.yaml
 apiVersion: argoproj.io/v1alpha1
-kind: Workflow
+kind: WorkflowTemplate
 metadata:
   generateName: artifact-passing-
   namespace: test
