@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  generateName: sequential-steps-
+spec:
+  entrypoint: sequential-example
+  templates:
+  - name: sequential-example
+    steps:
+    - - name: step-a
+        template: echo
+        arguments:
+          parameters:
+          - name: message
+            value: "A"
+    - - name: step-b
+        template: echo
+        arguments:
+          parameters:
+          - name: message
+            value: "B"
+  - name: echo
+    inputs:
+      parameters: [{name: message}]
+    container:
+      image: alpine
+      command: [sh, -c]
+      args: ["echo {{inputs.parameters.message}}"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
