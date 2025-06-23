@@ -14,5 +14,5 @@ spec:
   - name: whalesay-nginx
     container:
        image: docker/whalesay
-      command: [sh, -c]
-      args: ["echo 'Deploying sample whalesay image '; sleep 10"]
+      command: [cowsay]
+      args: ["hello world"]
