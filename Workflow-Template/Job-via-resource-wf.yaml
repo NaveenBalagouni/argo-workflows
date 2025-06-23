@@ -1,10 +1,11 @@
 # error: The WorkflowTemplate "k8s-jobs-" is invalid: metadata.name: Invalid value: "k8s-jobs-": a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')
+# The WorkflowTemplate "kubernets-jobs-" is invalid: metadata.name: Invalid value: "kubernets-jobs-": a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')
 
 
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: kubernets-jobs-
+  name: Kubernets-jobs
   namespace: test
 spec:
   entrypoint: pi-tmpl
