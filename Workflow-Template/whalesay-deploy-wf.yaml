@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: whalesay-deploy
+  namespace: test
+spec:
+  entrypoint: whalesay-deployment
+  templates:
+  - name: whalesay-deployment
+    steps:
+    - - name: whalesay-nginx
+        template: whalesay-nginx
+
+  - name: whalesay-nginx
+    container:
+       image: docker/whalesay
+      command: [sh, -c]
+      args: ["echo 'Deploying sample whalesay image '; sleep 10"]
