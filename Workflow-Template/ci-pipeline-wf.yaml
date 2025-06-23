@@ -1,10 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: python-app
+  name: ci-pipeline-python-app-wf
   namespace: test
 spec:
-  entrypoint: python-app
+  entrypoint: ci-pipeline-python-app-wf
+  volumes:
+    - name: test-vol
+      hostPath:
+        path: /path/to/tests
   templates:
   - name: python-app
     steps:
@@ -24,6 +28,9 @@ spec:
       image: python:3.11
       command: [python]
       args: ["-m","unittest","discover","-s","/app/tests"]
+      volumeMounts:
+        - name: test-vol
+          mountPath: /app/tests
   - name: deploy
     container:
       image: python:3.11
