@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  generateName: hello-param-
+  name: hello-param
   namespace: test
 spec:
   entrypoint: whalesay
