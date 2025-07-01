@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  generateName: dag-example-
+  name: dag-example-
   namespace: test
 spec:
   entrypoint: dag-example
